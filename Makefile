@@ -66,8 +66,8 @@ test_ocr: ## run ocr tests
 
 .PHONY: test_ocr_soak
 test_ocr_soak: ## run OCR soak test
-	NETWORK="ethereum_geth_performance" ginkgo -r --focus="@soak-ocr"
-
+	##NETWORK="ethereum_geth_performance" ginkgo -r --focus="@soak-ocr" #(edited)
+	NETWORK="moonbeam_testnet" ginkgo -r --focus="@soak-ocr"
 .PHONY: test_runlog
 test_runlog: ## run runlog tests
 	ginkgo -r --focus=@runlog
