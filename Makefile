@@ -70,7 +70,7 @@ test_flux_perf: ## run Flux perf test
 
 .PHONY: test_ocr_soak
 test_ocr_soak: ## run OCR soak test
-	NETWORK="ethereum_geth_performance" ginkgo -r --focus="@soak-ocr"
+	NETWORK="optimism_kovan" ginkgo -r --focus="@soak-ocr"
 
 .PHONY: test_runlog_soak
 test_runlog_soak: ## run Runlog soak test

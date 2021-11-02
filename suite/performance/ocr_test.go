@@ -26,7 +26,7 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 	BeforeEach(func() {
 		By("Deploying the environment", func() {
 			suiteSetup, err = actions.SingleNetworkSetup(
-				environment.NewChainlinkCluster(5),
+				environment.NewChainlinkCluster(4),
 				client.DefaultNetworkFromConfig,
 				tools.ProjectRoot,
 			)
@@ -55,7 +55,7 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 			perfTest = NewOCRTest(
 				OCRTestOptions{
 					TestOptions: TestOptions{
-						NumberOfContracts: 5,
+						NumberOfContracts: 4,
 					},
 					RoundTimeout: 180 * time.Second,
 					AdapterValue: 5,
