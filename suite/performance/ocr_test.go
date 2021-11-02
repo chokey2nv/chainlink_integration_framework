@@ -26,8 +26,15 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 	BeforeEach(func() {
 		By("Deploying the environment", func() {
 			suiteSetup, err = actions.SingleNetworkSetup(
+<<<<<<< HEAD
 				environment.NewChainlinkCluster(4),
 				client.DefaultNetworkFromConfig,
+=======
+				environment.NewChainlinkCluster(5),
+				actions.EthereumPerfNetworkHook,
+				actions.EthereumDeployerHook,
+				actions.EthereumClientHook,
+>>>>>>> main
 				tools.ProjectRoot,
 			)
 			Expect(err).ShouldNot(HaveOccurred())
