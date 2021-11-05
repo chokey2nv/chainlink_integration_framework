@@ -179,7 +179,7 @@ func CheckRound(i *OCRSetupInputs) {
 
 // StartNewRound requests a new round from the ocr contract and waits for confirmation
 func StartNewRound(i *OCRSetupInputs, roundNr int64) {
-	roundTimeout := time.Minute * 2
+	roundTimeout := time.Minute * 10 //@ceejay 2
 	for _, OCRInstance := range i.OCRInstances {
 		err := OCRInstance.RequestNewRound(i.DefaultWallet)
 		Expect(err).ShouldNot(HaveOccurred())

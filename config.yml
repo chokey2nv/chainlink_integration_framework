@@ -176,17 +176,18 @@ network_configs:
         transaction_limit: 6000000
     optimism_kovan:
         name: "Optimism Kovan testnet"
-        chain_id: 43113
+        chain_id: 69
         secret_private_keys: false
         urls:
-            - “wss://ws-kovan.optimism.io”
+            - wss://ws-kovan.optimism.io
         type: evm
         private_keys:
             - 5eec8ff6873deb4c525c2d3c53cef4390d4bfe4bb2b60fe6293301ed9a6de727
         transaction_limit: 7667850
-        transaction_timeout: 2m
+        transaction_timeout: 60m
         minimum_confirmations: 1
-        gas_estimation_buffer: 10000
+        gas_estimation_buffer: 15000000
+        block_gas_limit: 40000000000000000
     rsk_testnet:
         <<: *common_ethereum_testnet
         name: "RSK testnet"
@@ -217,7 +218,7 @@ kubernetes:
     qps: 50
     burst: 50
     # How long to wait for the environment to deploy & be marked as healthy before test errors
-    deployment_timeout: 5m
+    deployment_timeout: 60m
 
 logging:
     # panic=5, fatal=4, error=3, warn=2, info=1, debug=0, trace=-1
