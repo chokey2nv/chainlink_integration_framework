@@ -87,10 +87,20 @@ spec:
           value: "5s"
         - name: KEEPER_MINIMUM_REQUIRED_CONFIRMATIONS
           value: "1"
-        - name: KEEPER_MINIMUM_REQUIRED_CONFIRMATIONS
-          value: "200000"
+        #- name: KEEPER_MINIMUM_REQUIRED_CONFIRMATIONS
+          #value: "200000"
         - name: KEEPER_REGISTRY_PERFORM_GAS_OVERHEAD
           value: "150000"
+        - name: LAYER_2_TYPE
+          value: Optimism
+        - name: GAS_ESTIMATOR_MODE
+          value: Optimism2
+        - name: ETH_GAS_LIMIT_DEFAULT
+          value: 500000
+        # - name: CHAIN_TYPE
+        #   value: Optimism
+        # - name: GAS_ESTIMATOR_MODE
+        #   value: Optimism2
         {{ if (present "explorer" .Values.DependencyGroup) }}
         - name: EXPLORER_URL
           value: {{ .Values.DependencyGroup.explorer.clusterURL }}

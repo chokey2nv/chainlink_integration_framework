@@ -5,14 +5,13 @@
 # APPS_CHAINLINK_VERSION=1.0.0
 
 networks: # Selected network(s) for test execution
-    - "ethereum_geth"
-    - "ethereum_geth"
-keep_environments: Never # Options: Always, OnFail, Never
+    - "optimism_kovan"
+keep_environments: OnFail # Options: Always, OnFail, Never
 
 apps:
     chainlink:
         image: public.ecr.aws/chainlink/chainlink
-        version: 1.0.0
+        version: 1.0.1
         requests:
             memory: 768Mi
             cpu: 300m
@@ -221,12 +220,18 @@ network_configs:
             - avax_fuji_testnet_1
         transaction_limit: 6000000
     optimism_kovan:
-        <<: *common_ethereum_testnet
         name: "Optimism Kovan testnet"
-        chain_id: 43113
-        private_url: optimism_kovan_url
+        chain_id: 69
+        secret_private_keys: false
+        urls:
+            - wss://ws-kovan.optimism.io
+        type: evm
         private_keys:
-            - optimism_kovan_1
+            - 5eec8ff6873deb4c525c2d3c53cef4390d4bfe4bb2b60fe6293301ed9a6de727
+        transaction_limit: 7667850
+        transaction_timeout: 5m
+        minimum_confirmations: 1
+        gas_estimation_buffer: 4000000
     rsk_testnet:
         <<: *common_ethereum_testnet
         name: "RSK testnet"
@@ -257,7 +262,7 @@ kubernetes:
     qps: 50
     burst: 50
     # How long to wait for the environment to deploy & be marked as healthy before test errors
-    deployment_timeout: 5m
+    deployment_timeout: 60m
 
 logging:
     # panic=5, fatal=4, error=3, warn=2, info=1, debug=0, trace=-1
