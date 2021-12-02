@@ -27,8 +27,9 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 	BeforeEach(func() {
 		By("Deploying the environment", func() {
 			suiteSetup, err = actions.SingleNetworkSetup(
-				environment.NewChainlinkCluster(5),
-				hooks.EthereumPerfNetworkHook,
+				environment.NewChainlinkCluster(4),
+				// hooks.EthereumPerfNetworkHook,
+				hooks.NetworksFromConfigHook_,
 				hooks.EthereumDeployerHook,
 				hooks.EthereumClientHook,
 				utils.ProjectRoot,
@@ -46,7 +47,7 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 				nodes,
 				networkInfo.Client,
 				networkInfo.Wallets.Default(),
-				big.NewFloat(10),
+				big.NewFloat(0.01),
 				big.NewFloat(10),
 			)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -56,7 +57,7 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 			perfTest = NewOCRTest(
 				OCRTestOptions{
 					TestOptions: TestOptions{
-						NumberOfContracts: 5,
+						NumberOfContracts: 4,
 					},
 					RoundTimeout: 180 * time.Second,
 					AdapterValue: 5,

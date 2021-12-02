@@ -57,7 +57,27 @@ func NetworksFromConfigHook(config *config.Config) ([]client.BlockchainNetwork, 
 	}
 	return networks, nil
 }
-
+//ceejay
+func NetworksFromConfigHook_(config *config.Config) (client.BlockchainNetwork, error) {
+	networks := make([]client.BlockchainNetwork, 0)
+	if len(config.NetworkConfigs) < 2 {
+		return nil, errors.New("at least 2 evm networks are required")
+	}
+	for _, networkName := range config.Networks {
+		if _, ok := config.NetworkConfigs[networkName]; !ok {
+			return nil, fmt.Errorf("'%s' is not a supported network name. Check the network configs in you config file", networkName)
+		}
+		net, err := client.NewEthereumNetwork(networkName, config.NetworkConfigs[networkName])
+		if err != nil {
+			return nil, err
+		}
+		networks = append(networks, net)
+	}
+	if networks[0] == nil {
+		return nil, fmt.Errorf("Nill network")
+	}
+	return networks[0], nil
+}
 // EthereumPerfNetworkHook perf network func
 func EthereumPerfNetworkHook(config *config.Config) (client.BlockchainNetwork, error) {
 	return client.NewEthereumNetwork("ethereum_geth_performance", config.NetworkConfigs["ethereum_geth_performance"])

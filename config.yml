@@ -6,7 +6,7 @@
 
 networks: # Selected network(s) for test execution
     - "optimism_kovan"
-keep_environments: OnFail # Options: Always, OnFail, Never
+keep_environments: Always # Options: Always, OnFail, Never
 
 apps:
     chainlink:
