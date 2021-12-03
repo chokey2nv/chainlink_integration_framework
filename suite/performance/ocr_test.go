@@ -29,7 +29,7 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 			suiteSetup, err = actions.SingleNetworkSetup(
 				environment.NewChainlinkCluster(4),
 				// hooks.EthereumPerfNetworkHook,
-				hooks.NetworksFromConfigHook_,
+				hooks.EVMNetworkFromConfigHook,
 				hooks.EthereumDeployerHook,
 				hooks.EthereumClientHook,
 				utils.ProjectRoot,
@@ -39,7 +39,7 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 			networkInfo = suiteSetup.DefaultNetwork()
 
-			networkInfo.Client.ParallelTransactions(true)
+			// networkInfo.Client.ParallelTransactions(true)
 		})
 
 		By("Funding the Chainlink nodes", func() {
@@ -61,7 +61,7 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 					},
 					RoundTimeout: 180 * time.Second,
 					AdapterValue: 5,
-					TestDuration: 10 * time.Minute,
+					TestDuration: 5 * time.Minute, //ceejay changed from 10 to 5
 				},
 				contracts.DefaultOffChainAggregatorOptions(),
 				suiteSetup.Environment(),
