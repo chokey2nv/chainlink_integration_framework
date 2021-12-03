@@ -61,7 +61,8 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 					},
 					RoundTimeout: 180 * time.Second,
 					AdapterValue: 5,
-					TestDuration: 5 * time.Minute, //ceejay changed from 10 to 5
+					// TestDuration: 5 * time.Minute, //ceejay changed from 10 to 5
+					TestDuration: 480 * time.Minute, //ceejay changed from 10 to 5
 				},
 				contracts.DefaultOffChainAggregatorOptions(),
 				suiteSetup.Environment(),

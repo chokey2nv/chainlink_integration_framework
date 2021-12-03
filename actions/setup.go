@@ -2,11 +2,12 @@ package actions
 
 import (
 	"fmt"
-	"github.com/smartcontractkit/integrations-framework/hooks"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/smartcontractkit/integrations-framework/hooks"
 
 	"github.com/onsi/ginkgo"
 	"github.com/rs/zerolog/log"
@@ -256,7 +257,10 @@ func (s *multiNetworkSuiteSetup) TearDown() func() {
 // TearDown checks for test failure, writes logs if there is one, then tears down the test environment, based on the
 // keep_environments config value
 func teardown(config config.Config, env environment.Environment, clients ...client.BlockchainClient) func() {
-	if ginkgo.CurrentGinkgoTestDescription().Failed { // If a test fails, dump logs
+	if ginkgo.CurrentGinkgoTestDescription().Failed || strings.Contains(config.Networks[0], "optimism") { // If a test fails, dump logs
+		if !strings.Contains(config.Networks[0], "optimism") {
+			log.Error().Msg("Test Failed, tearing down the environment")
+		}
 		logsFolder := filepath.Join(config.ConfigFileLocation, "/logs/")
 		if _, err := os.Stat(logsFolder); os.IsNotExist(err) {
 			if err = os.Mkdir(logsFolder, 0755); err != nil {
