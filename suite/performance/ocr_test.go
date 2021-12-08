@@ -15,7 +15,7 @@ import (
 	"github.com/smartcontractkit/integrations-framework/environment"
 )
 
-var _ = Describe("OCR soak test @soak-ocr", func() {
+var _ = FDescribe("OCR soak test @soak-ocr", func() {
 	var (
 		suiteSetup  actions.SuiteSetup
 		networkInfo actions.NetworkInfo
@@ -28,7 +28,6 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 		By("Deploying the environment", func() {
 			suiteSetup, err = actions.SingleNetworkSetup(
 				environment.NewChainlinkCluster(4),
-				// hooks.EthereumPerfNetworkHook,
 				hooks.EVMNetworkFromConfigHook,
 				hooks.EthereumDeployerHook,
 				hooks.EthereumClientHook,
@@ -59,10 +58,9 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 					TestOptions: TestOptions{
 						NumberOfContracts: 4,
 					},
-					RoundTimeout: 180 * time.Second,
+					RoundTimeout: 65 * time.Minute,
 					AdapterValue: 5,
-					// TestDuration: 5 * time.Minute, //ceejay changed from 10 to 5
-					TestDuration: 480 * time.Minute, //ceejay changed from 10 to 5
+					TestDuration: 168 * time.Hour,
 				},
 				contracts.DefaultOffChainAggregatorOptions(),
 				suiteSetup.Environment(),
@@ -76,10 +74,10 @@ var _ = Describe("OCR soak test @soak-ocr", func() {
 	})
 
 	Describe("OCR Soak test", func() {
-		Measure("Measure OCR rounds", func(_ Benchmarker) {
+		It("Watch OCR rounds", func() {
 			err = perfTest.Run()
 			Expect(err).ShouldNot(HaveOccurred())
-		}, 1)
+		})
 	})
 
 	AfterEach(func() {
