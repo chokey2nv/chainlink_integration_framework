@@ -24,13 +24,18 @@ func FundChainlinkNodes(
 	linkAmount *big.Float,
 ) error {
 	for _, cl := range nodes {
-		toAddress, err := cl.PrimaryEthAddress()
+		nodeAddresses, err := cl.ReadETHKeys()
 		if err != nil {
 			return err
 		}
-		err = blockchain.Fund(fromWallet, toAddress, nativeAmount, linkAmount)
-		if err != nil {
-			return err
+		// Due to a bug in 1.0.1, regarding chainlink keys being non-deterministic, need to make sure both ETH keys
+		// for chainlink nodes are funded for now.
+		for _, key := range nodeAddresses.Data {
+			toAddress := key.Attributes.Address
+			err = blockchain.Fund(fromWallet, toAddress, nativeAmount, linkAmount)
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return blockchain.WaitForEvents()
